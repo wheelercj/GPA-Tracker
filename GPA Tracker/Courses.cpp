@@ -126,10 +126,14 @@ Course Courses::_read_new_course()
 	std::cout << "\n Enter grade: ";
 	char grade;
 	std::cin >> grade;
+	grade = toupper(grade);
 
-	std::cout << "\n Enter accreditor(s): ";
+	std::cout << "\n Enter accreditor(s), e.g. CSU/UC: ";
 	std::string accreditors;
 	std::cin >> accreditors;
+
+	if (grade == 'W')
+		std::cout << "\n Do not enter courses that do not count towards your GPA\n";
 
 	return Course(name, units, grade, accreditors);
 }
