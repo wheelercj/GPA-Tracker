@@ -11,6 +11,7 @@ public:
 	Course operator[](int n);
 	void _add_course();
 	void _add_course(Course new_course);
+	void _insert_course();
 	void _edit_course();
 	void _erase_course();
 	void _print_courses();

@@ -29,7 +29,22 @@ void Courses::_add_course(Course new_course)
 	_courses.push_back(new_course);
 }
 
+void Courses::_insert_course()
+{
+	if (_courses.empty())
+	{
+		std::cout << "\n No courses\n";
+		return;
+	}
 
+	Course new_course = _read_new_course();
+	std::cout << "\n Which course should be below the new one?";
+	int index = _find_course();
+	if (index == -1)
+		std::cout << "\n Course not found";
+	else
+		_courses.insert(_courses.begin() + index, new_course);
+}
 
 void Courses::_edit_course()
 {
@@ -56,7 +71,7 @@ void Courses::_erase_course()
 
 	int index = _find_course();
 	if (index == -1)
-		std::cout << "\n Class not found";
+		std::cout << "\n Course not found";
 	else
 		_courses.erase(_courses.begin() + index);
 }
@@ -69,7 +84,7 @@ void Courses::_print_courses()
 		return;
 	}
 
-	std::cout << "\n   Name             Units      Grade      Creditor"
+	std::cout << "\n   Name             Units      Grade      Accreditor"
 		<< "\n-------------------------------------------------------";
 
 	for (int i = 0; i < _courses.size(); i++)
@@ -108,7 +123,7 @@ Course Courses::_read_new_course()
 	std::cin >> units;
 	std::cout << "\n Enter grade: ";
 	std::cin >> grade;
-	std::cout << "\n Enter creditor(s): ";
+	std::cout << "\n Enter accreditor(s): ";
 	std::cin >> accreditors;
 
 	return Course(name, units, grade, accreditors);

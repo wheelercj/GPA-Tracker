@@ -6,7 +6,7 @@ Course load_course(std::string line);
 void save_courses(Courses courses);
 void print_menu();
 void run_menu(int menu_choice, Courses& courses);
-enum { ADD = 1, INSERT, EDIT, DELETE, VIEW_CLASSES, VIEW_GPA, EXIT };
+enum { ADD = 1, INSERT, EDIT, DELETE, VIEW_COURSES, VIEW_GPA, EXIT };
 
 int main()
 {
@@ -30,7 +30,7 @@ void print_menu()
 		<< "\n " << INSERT << ". Insert a course"
 		<< "\n " << EDIT << ". Edit a course"
 		<< "\n " << DELETE << ". Delete a course"
-		<< "\n " << VIEW_CLASSES << ". View course"
+		<< "\n " << VIEW_COURSES << ". View course"
 		<< "\n " << VIEW_GPA << ". View GPA" // TODO: add a help option that shows an example table of courses? And says not to add courses that don't count towards GPA?
 		<< "\n " << EXIT << ". Exit"
 		<< "\n> ";
@@ -45,7 +45,7 @@ void run_menu(int menu_choice, Courses& courses)
 		courses._add_course();
 		break;
 	case INSERT:
-		
+		courses._insert_course();
 		break;
 	case EDIT:
 		courses._edit_course();
@@ -53,7 +53,7 @@ void run_menu(int menu_choice, Courses& courses)
 	case DELETE:
 		courses._erase_course();
 		break;
-	case VIEW_CLASSES:
+	case VIEW_COURSES:
 		courses._print_courses();
 		break;
 	case VIEW_GPA:
