@@ -5,20 +5,20 @@ Courses load_courses();
 Course load_course(std::string line);
 void save_courses(Courses courses);
 void print_menu();
-void run_menu(int menu_choice, Courses& courses);
+void run_menu(std::string menu_choice, Courses& courses);
 enum { ADD = 1, INSERT, EDIT, DELETE, VIEW_COURSES, VIEW_GPA, EXIT };
 
 int main()
 {
 	Courses courses = load_courses();
 
-	int menu_choice;
+	std::string menu_choice;
 	do
 	{
 		print_menu();
 		std::cin >> menu_choice;
 		run_menu(menu_choice, courses);
-	} while (menu_choice != EXIT);
+	} while (menu_choice != std::to_string(EXIT));
 
 	save_courses(courses);
 }
@@ -26,19 +26,22 @@ int main()
 void print_menu()
 {
 	std::cout << "\n GPA Tracker:"
-		<< "\n " << ADD << ". Add a course"
-		<< "\n " << INSERT << ". Insert a course"
-		<< "\n " << EDIT << ". Edit a course"
-		<< "\n " << DELETE << ". Delete a course"
-		<< "\n " << VIEW_COURSES << ". View course"
-		<< "\n " << VIEW_GPA << ". View GPA" // TODO: add a help option that shows an example table of courses? And says not to add courses that don't count towards GPA?
-		<< "\n " << EXIT << ". Exit"
+		<< "\n " << ADD << ". Add course"
+		<< "\n " << INSERT << ". Insert course"
+		<< "\n " << EDIT << ". Edit course"
+		<< "\n " << DELETE << ". Delete course"
+		<< "\n " << VIEW_COURSES << ". View courses"
+		<< "\n " << VIEW_GPA << ". View GPA"
+		<< "\n " << EXIT << ". Save and Exit"
 		<< "\n> ";
 }
 
-void run_menu(int menu_choice, Courses& courses)
+void run_menu(std::string menu_choice, Courses& courses)
 {
-	switch (menu_choice)
+	if (menu_choice < "1" || menu_choice > "9")
+		return;
+	
+	switch (stoi(menu_choice))
 	{
 	case ADD:
 		std::cin.ignore();
@@ -74,6 +77,10 @@ Courses load_courses()
 		for (std::string line; std::getline(file, line);)
 			courses._add_course(load_course(line));
 		file.close();
+
+		if (courses._empty())
+			return courses;
+
 		std::cout << "\n Loaded saved courses from saved_courses.txt\n";
 	}
 
@@ -118,6 +125,9 @@ Course load_course(std::string line)
 
 void save_courses(Courses courses)
 {
+	if (courses._empty())
+		return;
+
 	std::ofstream file("saved_courses.txt");
 
 	for (int i = 0; i < courses._size(); i++)

@@ -8,6 +8,7 @@ public:
 	Courses();
 	~Courses();
 	int _size();
+	bool _empty();
 	Course operator[](int n);
 	void _add_course();
 	void _add_course(Course new_course);
@@ -19,6 +20,7 @@ public:
 private:
 	std::vector<Course> _courses;
 	Course _read_new_course();
+	int _read_units();
 	int _find_course();
 	double _get_GPA();
 	double _get_accreditor_GPA(std::string accreditor);
