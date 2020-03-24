@@ -19,7 +19,7 @@ Course::~Course()
 {
 }
 
-void Course::_print_class()
+void Course::_print_course()
 {
 	std::cout << std::setw(21) << std::left << _name
 		<< std::setw(11) << _semester_units << std::setw(9)

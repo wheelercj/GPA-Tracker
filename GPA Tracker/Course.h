@@ -9,7 +9,7 @@ public:
 	Course();
 	Course(std::string new_name, int new_units, char new_grade, std::string new_accreditor);
 	~Course();
-	void _print_class();
+	void _print_course();
 
 	std::string _get_name();
 	int _get_units();

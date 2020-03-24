@@ -9,16 +9,16 @@ public:
 	~Courses();
 	int _size();
 	Course operator[](int n);
-	void _add_class();
-	void _add_class(Course new_class);
-	void _update_class();
-	void _erase_class();
-	void _print_classes();
+	void _add_course();
+	void _add_course(Course new_course);
+	void _edit_course();
+	void _erase_course();
+	void _print_courses();
 	void _print_GPAs();
 private:
-	std::vector<Course> _classes;
-	Course _read_new_class();
-	int _find_class();
+	std::vector<Course> _courses;
+	Course _read_new_course();
+	int _find_course();
 	double _get_GPA();
 	double _get_accreditor_GPA(std::string accreditor);
 };

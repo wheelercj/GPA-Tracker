@@ -10,70 +10,72 @@ Courses::~Courses()
 
 int Courses::_size()
 {
-	return _classes.size();
+	return _courses.size();
 }
 
 Course Courses::operator[](int n)
 {
-	return _classes[n];
+	return _courses[n];
 }
 
-void Courses::_add_class()
+void Courses::_add_course()
 {
-	Course new_class = _read_new_class();
-	_classes.push_back(new_class);
+	Course new_course = _read_new_course();
+	_courses.push_back(new_course);
 }
 
-void Courses::_add_class(Course new_class)
+void Courses::_add_course(Course new_course)
 {
-	_classes.push_back(new_class);
+	_courses.push_back(new_course);
 }
 
-void Courses::_update_class()
+
+
+void Courses::_edit_course()
 {
-	if (_classes.empty())
+	if (_courses.empty())
 	{
-		std::cout << "\n No classes\n";
+		std::cout << "\n No courses\n";
 		return;
 	}
 
-	int index = _find_class();
+	int index = _find_course();
 	if (index == -1)
-		std::cout << "\n Class not found";
+		std::cout << "\n Course not found";
 	else
-		_classes[index] = _read_new_class();
+		_courses[index] = _read_new_course();
 }
 
-void Courses::_erase_class()
+void Courses::_erase_course()
 {
-	if (_classes.empty())
+	if (_courses.empty())
 	{
-		std::cout << "\n No classes\n";
+		std::cout << "\n No courses\n";
 		return;
 	}
 
-	int index = _find_class();
+	int index = _find_course();
 	if (index == -1)
 		std::cout << "\n Class not found";
 	else
-		_classes.erase(_classes.begin() + index);
+		_courses.erase(_courses.begin() + index);
 }
 
-void Courses::_print_classes()
+void Courses::_print_courses()
 {
-	if (_classes.empty())
+	if (_courses.empty())
 	{
-		std::cout << "\n No classes\n";
+		std::cout << "\n No courses\n";
 		return;
 	}
 
 	std::cout << "\n   Name             Units      Grade      Creditor"
 		<< "\n-------------------------------------------------------";
 
-	for (int i = 0; i < _classes.size(); i++)
+	for (int i = 0; i < _courses.size(); i++)
 	{
 		std::cout << "\n ";
-		_classes[i]._print_class();
+		_courses[i]._print_course();
 	}
 
 	std::cout << std::endl;
@@ -81,9 +83,9 @@ void Courses::_print_classes()
 
 void Courses::_print_GPAs()
 {
-	if (_classes.empty())
+	if (_courses.empty())
 	{
-		std::cout << "\n No classes\n";
+		std::cout << "\n No courses\n";
 		return;
 	}
 
@@ -93,7 +95,7 @@ void Courses::_print_GPAs()
 		<< std::endl;
 }
 
-Course Courses::_read_new_class()
+Course Courses::_read_new_course()
 {
 	std::string name;
 	int units;
@@ -112,16 +114,16 @@ Course Courses::_read_new_class()
 	return Course(name, units, grade, accreditors);
 }
 
-int Courses::_find_class()
+int Courses::_find_course()
 {
-	std::cout << "\n\n Enter class name: ";
+	std::cout << "\n\n Enter course name: ";
 	std::string name;
 	std::cin.ignore();
 	std::getline(std::cin, name);
 
-	for (int i = 0; i < _classes.size(); i++)
+	for (int i = 0; i < _courses.size(); i++)
 	{
-		if (name == _classes[i]._get_name())
+		if (name == _courses[i]._get_name())
 			return i;
 	}
 
@@ -133,10 +135,10 @@ double Courses::_get_GPA()
 	int total_grade_points = 0,
 		total_units_attempted = 0;
 
-	for (int i = 0; i < _classes.size(); i++)
+	for (int i = 0; i < _courses.size(); i++)
 	{
-		total_grade_points += _classes[i]._get_grade_points();
-		total_units_attempted += _classes[i]._get_units();
+		total_grade_points += _courses[i]._get_grade_points();
+		total_units_attempted += _courses[i]._get_units();
 	}
 
 	return (double)total_grade_points / total_units_attempted;
@@ -147,12 +149,12 @@ double Courses::_get_accreditor_GPA(std::string accreditor)
 	int total_grade_points = 0,
 		total_units_attempted = 0;
 
-	for (int i = 0; i < _classes.size(); i++)
+	for (int i = 0; i < _courses.size(); i++)
 	{
-		if (_classes[i]._get_accreditors().find(accreditor) != std::string::npos)
+		if (_courses[i]._get_accreditors().find(accreditor) != std::string::npos)
 		{
-			total_grade_points += _classes[i]._get_grade_points();
-			total_units_attempted += _classes[i]._get_units();
+			total_grade_points += _courses[i]._get_grade_points();
+			total_units_attempted += _courses[i]._get_units();
 		}
 	}
 

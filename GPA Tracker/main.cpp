@@ -1,82 +1,86 @@
 #include "Courses.h"
 #include <fstream>
 
-Courses load_classes();
-Course load_class(std::string line);
-void save_classes(Courses classes);
+Courses load_courses();
+Course load_course(std::string line);
+void save_courses(Courses courses);
 void print_menu();
-void run_menu(int menu_choice, Courses& classes);
-enum { ADD = 1, UPDATE, DELETE, VIEW_CLASSES, VIEW_GPA, EXIT };
+void run_menu(int menu_choice, Courses& courses);
+enum { ADD = 1, INSERT, EDIT, DELETE, VIEW_CLASSES, VIEW_GPA, EXIT };
 
 int main()
 {
-	Courses classes = load_classes();
+	Courses courses = load_courses();
 
 	int menu_choice;
 	do
 	{
 		print_menu();
 		std::cin >> menu_choice;
-		run_menu(menu_choice, classes);
+		run_menu(menu_choice, courses);
 	} while (menu_choice != EXIT);
 
-	save_classes(classes);
+	save_courses(courses);
 }
 
 void print_menu()
 {
-	std::cout << "\n Transfer GPA Calculator:"
-		<< "\n " << ADD << ". Add a class" // TODO: add an insert option?
-		<< "\n " << UPDATE << ". Update a class"
-		<< "\n " << DELETE << ". Delete a class"
-		<< "\n " << VIEW_CLASSES << ". View classes"
-		<< "\n " << VIEW_GPA << ". View GPA" // TODO: add a help option that shows an example table of classes? Andn says not to add classes that don't count towards GPA?
+	std::cout << "\n GPA Tracker:"
+		<< "\n " << ADD << ". Add a course"
+		<< "\n " << INSERT << ". Insert a course"
+		<< "\n " << EDIT << ". Edit a course"
+		<< "\n " << DELETE << ". Delete a course"
+		<< "\n " << VIEW_CLASSES << ". View course"
+		<< "\n " << VIEW_GPA << ". View GPA" // TODO: add a help option that shows an example table of courses? And says not to add courses that don't count towards GPA?
 		<< "\n " << EXIT << ". Exit"
 		<< "\n> ";
 }
 
-void run_menu(int menu_choice, Courses& classes)
+void run_menu(int menu_choice, Courses& courses)
 {
 	switch (menu_choice)
 	{
 	case ADD:
 		std::cin.ignore();
-		classes._add_class();
+		courses._add_course();
 		break;
-	case UPDATE:
-		classes._update_class();
+	case INSERT:
+		
+		break;
+	case EDIT:
+		courses._edit_course();
 		break;
 	case DELETE:
-		classes._erase_class();
+		courses._erase_course();
 		break;
 	case VIEW_CLASSES:
-		classes._print_classes();
+		courses._print_courses();
 		break;
 	case VIEW_GPA:
-		classes._print_GPAs();
+		courses._print_GPAs();
 		break;
 	case EXIT:
 		break;
 	}
 }
 
-Courses load_classes()
+Courses load_courses()
 {
-	Courses classes;
+	Courses courses;
 
-	std::ifstream file("saved_classes.txt");
+	std::ifstream file("saved_courses.txt");
 	if (file)
 	{
 		for (std::string line; std::getline(file, line);)
-			classes._add_class(load_class(line));
+			courses._add_course(load_course(line));
 		file.close();
-		std::cout << "\n Loaded saved classes from saved_classes.txt\n";
+		std::cout << "\n Loaded saved courses from saved_courses.txt\n";
 	}
 
-	return classes;
+	return courses;
 }
 
-Course load_class(std::string line)
+Course load_course(std::string line)
 {
 	std::string name = "";
 	int units = -1;
@@ -112,16 +116,16 @@ Course load_class(std::string line)
 	return Course(name, units, grade, accreditor);
 }
 
-void save_classes(Courses classes)
+void save_courses(Courses courses)
 {
-	std::ofstream file("saved_classes.txt");
+	std::ofstream file("saved_courses.txt");
 
-	for (int i = 0; i < classes._size(); i++)
+	for (int i = 0; i < courses._size(); i++)
 	{
-		file << classes[i]._get_name() << (char)219
-			<< classes[i]._get_units() << (char)219
-			<< classes[i]._get_grade() << (char)219
-			<< classes[i]._get_accreditors() << (char)219 << std::endl;
+		file << courses[i]._get_name() << (char)219
+			<< courses[i]._get_units() << (char)219
+			<< courses[i]._get_grade() << (char)219
+			<< courses[i]._get_accreditors() << (char)219 << std::endl;
 	}
 
 	file.close();
