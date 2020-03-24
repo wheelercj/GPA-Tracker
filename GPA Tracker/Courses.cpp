@@ -109,9 +109,9 @@ void Courses::_print_GPAs()
 		return;
 	}
 
-	std::cout << "\n Cumulative GPA: " << std::fixed << _get_GPA()
-		<< "\n UC transferable GPA: " << _get_accreditor_GPA("UC")
-		<< "\n CSU transferable GPA: " << _get_accreditor_GPA("CSU")
+	std::cout << "\n Cumulative GPA: " << std::fixed << _get_GPA("")
+		<< "\n UC transferable GPA: " << _get_GPA("UC")
+		<< "\n CSU transferable GPA: " << _get_GPA("CSU")
 		<< std::endl;
 }
 
@@ -173,21 +173,7 @@ int Courses::_find_course()
 	return -1;
 }
 
-double Courses::_get_GPA()
-{
-	int total_grade_points = 0,
-		total_units_attempted = 0;
-
-	for (int i = 0; i < _courses.size(); i++)
-	{
-		total_grade_points += _courses[i]._get_grade_points();
-		total_units_attempted += _courses[i]._get_units();
-	}
-
-	return (double)total_grade_points / total_units_attempted;
-}
-
-double Courses::_get_accreditor_GPA(std::string accreditor)
+double Courses::_get_GPA(std::string accreditor)
 {
 	int total_grade_points = 0,
 		total_units_attempted = 0;
