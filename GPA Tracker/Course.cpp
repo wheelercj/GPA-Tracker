@@ -43,8 +43,7 @@ char Course::_get_grade()
 
 int Course::_get_grade_points()
 {
-	assert(_grade != 'W');
-	int grade_value = -1;
+	int grade_value = 0;
 
 	switch (_grade)
 	{
@@ -59,9 +58,6 @@ int Course::_get_grade_points()
 		break;
 	case 'D':
 		grade_value = 1;
-		break;
-	case 'F':
-		grade_value = 0;
 	}
 
 	return _semester_units * grade_value;
