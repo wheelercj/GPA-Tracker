@@ -48,6 +48,7 @@ void run_menu(std::string menu_choice, Courses& courses)
 		courses._add_course();
 		break;
 	case INSERT:
+		std::cin.ignore();
 		courses._insert_course();
 		break;
 	case EDIT:
