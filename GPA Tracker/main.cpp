@@ -1,16 +1,16 @@
 #include "Courses.h"
 #include <fstream>
 
-Courses load_courses();
-Course load_course(std::string line);
-void save_courses(Courses courses);
+Courses load_courses_from_file();
+Course load_course_from_file(std::string line);
+void save_courses_to_file(Courses courses);
 void print_menu();
 void run_menu(std::string menu_choice, Courses& courses);
 enum { ADD = 1, INSERT, EDIT, DELETE, VIEW_COURSES, VIEW_GPA, EXIT };
 
 int main()
 {
-	Courses courses = load_courses();
+	Courses courses = load_courses_from_file();
 
 	std::string menu_choice;
 	do
@@ -20,7 +20,7 @@ int main()
 		run_menu(menu_choice, courses);
 	} while (menu_choice != std::to_string(EXIT));
 
-	save_courses(courses);
+	save_courses_to_file(courses);
 }
 
 void print_menu()
@@ -68,7 +68,7 @@ void run_menu(std::string menu_choice, Courses& courses)
 	}
 }
 
-Courses load_courses()
+Courses load_courses_from_file()
 {
 	Courses courses;
 
@@ -76,7 +76,7 @@ Courses load_courses()
 	if (file)
 	{
 		for (std::string line; std::getline(file, line);)
-			courses._add_course(load_course(line));
+			courses._add_course(load_course_from_file(line));
 		file.close();
 
 		if (courses._empty())
@@ -88,7 +88,7 @@ Courses load_courses()
 	return courses;
 }
 
-Course load_course(std::string line)
+Course load_course_from_file(std::string line)
 {
 	std::string name = "";
 	int units = -1;
@@ -124,7 +124,7 @@ Course load_course(std::string line)
 	return Course(name, units, grade, accreditor);
 }
 
-void save_courses(Courses courses)
+void save_courses_to_file(Courses courses)
 {
 	if (courses._empty())
 		return;
