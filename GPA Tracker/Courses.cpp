@@ -25,8 +25,7 @@ Course Courses::operator[](int n)
 
 void Courses::_add_course()
 {
-	Course new_course = _read_new_course();
-	_courses.push_back(new_course);
+	_courses.push_back(_read_new_course());
 }
 
 void Courses::_add_course(Course new_course)
@@ -59,6 +58,7 @@ void Courses::_edit_course()
 		return;
 	}
 
+	std::cout << "\n Which course would you like to edit?";
 	int index = _find_course();
 	if (index == -1)
 		std::cout << "\n Course not found\n";
