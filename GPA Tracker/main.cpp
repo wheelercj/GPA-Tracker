@@ -2,7 +2,7 @@
 #include <fstream>
 
 Courses load_courses_from_file();
-Course load_course_from_file(std::string line);
+Course parse_course(std::string line);
 void save_courses_to_file(Courses courses);
 void print_menu();
 void run_menu(std::string menu_choice, Courses& courses);
@@ -76,7 +76,7 @@ Courses load_courses_from_file()
 	if (file)
 	{
 		for (std::string line; std::getline(file, line);)
-			courses._add_course(load_course_from_file(line));
+			courses._add_course(parse_course(line));
 		file.close();
 
 		if (courses._empty())
@@ -88,7 +88,7 @@ Courses load_courses_from_file()
 	return courses;
 }
 
-Course load_course_from_file(std::string line)
+Course parse_course(std::string line)
 {
 	std::string name = "";
 	int units = -1;
