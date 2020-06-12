@@ -58,6 +58,9 @@ void Courses::_edit_course()
 		return;
 	}
 
+	_print_courses();
+	std::cout << std::endl;
+
 	std::cout << "\n Which course would you like to edit?";
 	int index = _find_course();
 	if (index == -1)
@@ -89,7 +92,7 @@ void Courses::_print_courses()
 		return;
 	}
 
-	std::cout << "\n   Name             Units      Grade      Accreditor"
+	std::cout << "\n   Name             Units      Grade      Accreditor(s)"
 		<< "\n-------------------------------------------------------";
 
 	for (int i = 0; i < _courses.size(); i++)
@@ -109,7 +112,7 @@ void Courses::_print_GPAs()
 		return;
 	}
 
-	std::cout << "\n Cumulative GPA: " << std::fixed << _get_GPA("")
+	std::cout << "\n LAVC GPA: " << std::fixed << _get_GPA("LAVC")
 		<< "\n UC transferable GPA: " << _get_GPA("UC")
 		<< "\n CSU transferable GPA: " << _get_GPA("CSU")
 		<< std::endl;
@@ -128,12 +131,9 @@ Course Courses::_read_new_course()
 	std::cin >> grade;
 	grade = toupper(grade);
 
-	std::cout << "\n Enter accreditor(s), e.g. CSU/UC: ";
+	std::cout << "\n Enter accreditor(s), e.g. LAVC/CSU/UC: ";
 	std::string accreditors;
 	std::cin >> accreditors;
-
-	if (grade == 'W')
-		std::cout << "\n Do not enter courses that do not count towards your GPA\n";
 
 	return Course(name, units, grade, accreditors);
 }
