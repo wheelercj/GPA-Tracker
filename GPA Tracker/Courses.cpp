@@ -114,7 +114,12 @@ void Courses::_print_GPAs()
 
 	std::vector<std::string> accreditors = _list_accreditors();
 	for (int i = 0; i < accreditors.size(); i++)
-		std::cout << "\n " << accreditors[i] << " GPA: " << std::fixed << _get_GPA(accreditors[i]);
+	{
+		double GPA = _get_GPA(accreditors[i]);
+		if (GPA >= 0)
+			std::cout << "\n " << accreditors[i] << " GPA: " << std::fixed << GPA;
+	}
+
 	std::cout << std::endl;
 }
 
@@ -131,7 +136,7 @@ Course Courses::_read_new_course()
 	std::cin >> grade;
 	grade = toupper(grade);
 
-	std::cout << "\n Enter accreditor(s) as a slash-seperated list, e.g. LAVC/CSU/UC:\n ";
+	std::cout << "\n Enter accreditor(s) as a slash-separated list, e.g. LAVC/CSU/UC:\n ";
 	std::string accreditors;
 	std::cin >> accreditors;
 
@@ -214,19 +219,32 @@ std::vector<std::string> Courses::_list_accreditors()
 	return list;
 }
 
+// returns -1 if the accreditor is not giving credit for any units
+// e.g. if the user entered "none" as the accreditor for all courses 
+// with a grade of 'W'
 double Courses::_get_GPA(std::string accreditor)
 {
 	int total_grade_points = 0,
-		total_units_attempted = 0;
+		GPA_units = 0; // the total units attempted that count towards the GPA
 
+	// for each course
 	for (int i = 0; i < _courses.size(); i++)
 	{
+		// if the course is accredited
 		if (_courses[i]._get_accreditors().find(accreditor) != std::string::npos)
 		{
-			total_grade_points += _courses[i]._get_grade_points();
-			total_units_attempted += _courses[i]._get_units();
+			// if the course's grade is not a 'W'
+			int grade_points = _courses[i]._get_grade_points();
+			if (grade_points >= 0)
+			{
+				// add its grade points and GPA units to the totals
+				total_grade_points += grade_points;
+				GPA_units += _courses[i]._get_units();
+			}
 		}
 	}
 
-	return (double)total_grade_points / total_units_attempted;
+	if (!GPA_units)
+		return -1;
+	return (double)total_grade_points / GPA_units;
 }

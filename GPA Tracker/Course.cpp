@@ -41,6 +41,7 @@ char Course::_get_grade()
 	return _grade;
 }
 
+// returns a negative number if the course's grade is 'W'
 int Course::_get_grade_points()
 {
 	int grade_value = 0;
@@ -58,6 +59,12 @@ int Course::_get_grade_points()
 		break;
 	case 'D':
 		grade_value = 1;
+		break;
+	case 'F':
+		grade_value = 0;
+		break;
+	case 'W':
+		grade_value = -1;
 	}
 
 	return _semester_units * grade_value;
