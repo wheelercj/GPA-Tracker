@@ -22,5 +22,6 @@ private:
 	Course _read_new_course();
 	int _read_units();
 	int _find_course();
+	std::vector<std::string> _list_accreditors();
 	double _get_GPA(std::string accreditor);
 };

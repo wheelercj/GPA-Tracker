@@ -112,10 +112,10 @@ void Courses::_print_GPAs()
 		return;
 	}
 
-	std::cout << "\n LAVC GPA: " << std::fixed << _get_GPA("LAVC")
-		<< "\n UC transferable GPA: " << _get_GPA("UC")
-		<< "\n CSU transferable GPA: " << _get_GPA("CSU")
-		<< std::endl;
+	std::vector<std::string> accreditors = _list_accreditors();
+	for (int i = 0; i < accreditors.size(); i++)
+		std::cout << "\n " << accreditors[i] << " GPA: " << std::fixed << _get_GPA(accreditors[i]);
+	std::cout << std::endl;
 }
 
 Course Courses::_read_new_course()
@@ -131,7 +131,7 @@ Course Courses::_read_new_course()
 	std::cin >> grade;
 	grade = toupper(grade);
 
-	std::cout << "\n Enter accreditor(s), e.g. LAVC/CSU/UC: ";
+	std::cout << "\n Enter accreditor(s) as a slash-seperated list, e.g. LAVC/CSU/UC:\n ";
 	std::string accreditors;
 	std::cin >> accreditors;
 
@@ -171,6 +171,47 @@ int Courses::_find_course()
 	}
 
 	return -1;
+}
+
+std::vector<std::string> Courses::_list_accreditors()
+{
+	std::vector<std::string> list;
+
+	// for each course
+	for (int i = 0; i < _courses.size(); i++)
+	{
+		// for each course's accreditors
+		std::string accreditors = _courses[i]._get_accreditors();
+		for (int j = 0; j < accreditors.size(); j++)
+		{
+			// the accreditors must be seperated by slashes
+			if (accreditors[j] == '/' || j == accreditors.size() - 1)
+			{
+				if (accreditors[j] == '/')
+				{
+					accreditors.erase(j, 1);
+					j--;
+				}
+
+				std::string next = accreditors.substr(0, j + 1);
+
+				// add the accreditor to the list if it's not already there
+				bool found = false;
+				for (int k = 0; !found && k < list.size(); k++)
+				{
+					if (next == list[k])
+						found = true;
+				}
+				if (!found)
+					list.push_back(next);
+
+				accreditors.erase(0, j + 1);
+				j = 0;
+			}
+		}
+	}
+
+	return list;
 }
 
 double Courses::_get_GPA(std::string accreditor)
