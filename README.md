@@ -6,3 +6,4 @@ Save your course data and calculate your GPAs including transfer GPAs.
 ## Usage
 * For each course, you can enter which colleges give credit or have an accreditation agreement. Enter the colleges as a slash-seperated list, e.g. LAVC/CSU/UC
 * If you run the program on Repl.it, you will need to download the `saved_courses.txt` file that it generates to actually save. Repl.it doesn't save this file between uses.
+* Courses with a 'W' grade do not count towards any GPA, so either don't enter them or enter "none" as the accreditor.
