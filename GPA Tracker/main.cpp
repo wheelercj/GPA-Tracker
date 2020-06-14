@@ -44,13 +44,13 @@ void run_menu(std::string menu_choice, Courses& courses)
 	switch (stoi(menu_choice))
 	{
 	case ADD: // add a course
+		std::cin.ignore();
 		courses._add_course();
 		break;
 	case INSERT: // insert a course
 		courses._insert_course();
 		break;
 	case EDIT: // edit a course
-		std::cin.ignore();
 		courses._edit_course();
 		break;
 	case DELETE: // delete a course

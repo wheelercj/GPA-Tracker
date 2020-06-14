@@ -44,13 +44,16 @@ void Courses::_insert_course()
 		return;
 	}
 
-	Course new_course = _read_new_course();
-	std::cout << "\n Which course should be below this new one?";
+	std::cout << "\n Insert above which course?";
 	int index = _find_course();
 	if (index == -1)
 		std::cout << "\n Course not found\n";
 	else
+	{
+		std::cout << "\n Enter the new course data.";
+		Course new_course = _read_new_course();
 		_courses.insert(_courses.begin() + index, new_course);
+	}
 }
 
 // edit a course
@@ -99,6 +102,7 @@ void Courses::_run_edit_menu(std::string menu_choice, Course& course)
 	switch (stoi(menu_choice))
 	{
 	case NAME: // edit course name
+		std::cin.ignore();
 		course._set_name(_read_name());
 		break;
 	case UNITS: // edit course units
@@ -124,7 +128,6 @@ void Courses::_erase_course()
 		return;
 	}
 
-	std::cin.ignore();
 	int index = _find_course();
 	if (index == -1)
 		std::cout << "\n Course not found\n";
@@ -189,7 +192,6 @@ std::string Courses::_read_name()
 {
 	std::cout << "\n Enter name: ";
 	std::string name;
-	std::cin.ignore();
 	std::getline(std::cin, name);
 	return name;
 }
@@ -240,6 +242,7 @@ int Courses::_find_course()
 {
 	std::cout << "\n\n Enter course name: ";
 	std::string name;
+	std::cin.ignore();
 	std::getline(std::cin, name);
 
 	std::vector<int> matches;
