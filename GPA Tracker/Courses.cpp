@@ -87,7 +87,7 @@ void Courses::_print_edit_menu()
 		"\n " << UNITS << ". Units"
 		"\n " << GRADE << ". Grade"
 		"\n " << ACCREDITORS << ". Accreditors"
-		"\n " << RETURN << ". Exit"
+		"\n " << RETURN << ". Return to main menu"
 		"\n> ";
 }
 
