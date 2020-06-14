@@ -50,6 +50,7 @@ void run_menu(std::string menu_choice, Courses& courses)
 		courses._insert_course();
 		break;
 	case EDIT: // edit a course
+		std::cin.ignore();
 		courses._edit_course();
 		break;
 	case DELETE: // delete a course
