@@ -43,27 +43,25 @@ void run_menu(std::string menu_choice, Courses& courses)
 	
 	switch (stoi(menu_choice))
 	{
-	case ADD:
-		std::cin.ignore();
+	case ADD: // add a course
 		courses._add_course();
 		break;
-	case INSERT:
-		std::cin.ignore();
+	case INSERT: // insert a course
 		courses._insert_course();
 		break;
-	case EDIT:
+	case EDIT: // edit a course
 		courses._edit_course();
 		break;
-	case DELETE:
+	case DELETE: // delete a course
 		courses._erase_course();
 		break;
-	case VIEW_COURSES:
+	case VIEW_COURSES: // view all courses
 		courses._print_courses();
 		break;
-	case VIEW_GPA:
+	case VIEW_GPA: // view all GPAs
 		courses._print_GPAs();
 		break;
-	case EXIT:
+	case EXIT: // save and quit the program
 		break;
 	}
 }
@@ -75,6 +73,7 @@ Courses load_courses_from_file()
 	std::ifstream file("saved_courses.txt");
 	if (file)
 	{
+		// each course is on one line
 		for (std::string line; std::getline(file, line);)
 			courses._add_course(parse_course(line));
 		file.close();
@@ -90,38 +89,34 @@ Courses load_courses_from_file()
 
 Course parse_course(std::string line)
 {
-	std::string name = "";
-	int units = -1;
-	char grade = 'Z';
-	std::string accreditor = "";
+	// each part of the course is delimited by ASCII character 219.
+	int i = 0;
 
-	for (int i = 0, j = 0; i < line.size(); i++)
-	{
-		if (line[i] == (char)219)
-		{
-			if (name.empty())
-			{
-				name = line.substr(j, i);
-				j = i + 1;
-			}
-			else if (units == -1)
-			{
-				units = stoi(line.substr(j, i - j));
-				j = i + 1;
-			}
-			else if (grade == 'Z')
-			{
-				grade = line[i - 1];
-				j = i + 1;
-			}
-			else if (accreditor.empty())
-			{
-				accreditor = line.substr(j, i - j);
-			}
-		}
-	}
+	// parse course name
+	for (; line[i] != (char)219; i++);
+	std::string name = line.substr(0, i);
+	line.erase(0, i + 1);
+	i = 0;
 
-	return Course(name, units, grade, accreditor);
+	// parse course units
+	for (; line[i] != (char)219; i++);
+	int units = stoi(line.substr(0, i));
+	line.erase(0, i + 1);
+	i = 0;
+
+	// parse course grade
+	for (; line[i] != (char)219; i++);
+	char grade = line[0];
+	line.erase(0, i + 1);
+	i = 0;
+
+	// parse course accreditors
+	for (; line[i] != (char)219; i++);
+	std::string accreditors = line.substr(0, i);
+	line.erase(0, i + 1);
+	i = 0;
+
+	return Course(name, units, grade, accreditors);
 }
 
 void save_courses_to_file(Courses courses)
@@ -136,7 +131,8 @@ void save_courses_to_file(Courses courses)
 		file << courses[i]._get_name() << (char)219
 			<< courses[i]._get_units() << (char)219
 			<< courses[i]._get_grade() << (char)219
-			<< courses[i]._get_accreditors() << (char)219 << std::endl;
+			<< courses[i]._get_accreditors() << (char)219
+			<< std::endl;
 	}
 
 	file.close();

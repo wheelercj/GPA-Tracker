@@ -7,12 +7,12 @@ Course::Course()
 	_semester_units = -1;
 }
 
-Course::Course(std::string new_name, int new_units, char new_grade, std::string new_accreditor)
+Course::Course(std::string new_name, int new_units, char new_grade, std::string new_accreditors)
 {
 	_name = new_name;
 	_semester_units = new_units;
 	_grade = new_grade;
-	_accreditor = new_accreditor;
+	_accreditors = new_accreditors;
 }
 
 Course::~Course()
@@ -23,7 +23,7 @@ void Course::_print_course()
 {
 	std::cout << std::setw(21) << std::left << _name
 		<< std::setw(11) << _semester_units << std::setw(9)
-		<< _grade << _accreditor;
+		<< _grade << _accreditors;
 }
 
 std::string Course::_get_name()
@@ -72,5 +72,25 @@ int Course::_get_grade_points()
 
 std::string Course::_get_accreditors()
 {
-	return _accreditor;
+	return _accreditors;
+}
+
+void Course::_set_name(std::string new_name)
+{
+	_name = new_name;
+}
+
+void Course::_set_units(int new_units)
+{
+	_semester_units = new_units;
+}
+
+void Course::_set_grade(char new_grade)
+{
+	_grade = new_grade;
+}
+
+void Course::_set_accreditors(std::string new_accreditors)
+{
+	_accreditors = new_accreditors;
 }
