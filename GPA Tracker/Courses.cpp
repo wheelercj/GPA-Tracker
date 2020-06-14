@@ -53,6 +53,7 @@ void Courses::_insert_course()
 		_courses.insert(_courses.begin() + index, new_course);
 }
 
+// edit a course
 void Courses::_edit_course()
 {
 	if (_courses.empty())
@@ -183,6 +184,7 @@ Course Courses::_read_new_course()
 	return Course(name, units, grade, accreditors);
 }
 
+// get a course name from the user
 std::string Courses::_read_name()
 {
 	std::cout << "\n Enter name: ";
@@ -192,6 +194,7 @@ std::string Courses::_read_name()
 	return name;
 }
 
+// get a course's units from the user
 int Courses::_read_units()
 {
 	bool invalid_input = true;
@@ -211,6 +214,7 @@ int Courses::_read_units()
 	return units - '0';
 }
 
+// get a course's grade from the user
 char Courses::_read_grade()
 {
 	std::cout << "\n Enter grade: ";
@@ -220,30 +224,54 @@ char Courses::_read_grade()
 	return grade;
 }
 
+// get a course's accreditor(s) from the user
 std::string Courses::_read_accreditors()
 {
-	std::cout << "\n Enter accreditor(s) as a slash-separated list, e.g. LAVC/CSU/UC:\n ";
+	std::cout << "\n Enter accreditor(s) as a slash-separated list, e.g. LACCD/CSU/UC:\n ";
 	std::string accreditors;
 	std::cin.ignore();
 	std::getline(std::cin, accreditors);
 	return accreditors;
 }
 
+// Search the courses by name.
+// Returns the index of the course or -1 if the course is not found.
 int Courses::_find_course()
 {
 	std::cout << "\n\n Enter course name: ";
 	std::string name;
 	std::getline(std::cin, name);
 
+	std::vector<int> matches;
 	for (int i = 0; i < _courses.size(); i++)
 	{
 		if (name == _courses[i]._get_name())
-			return i;
+			matches.push_back(i);
 	}
 
-	return -1;
+	if (matches.size() == 0) // course not found
+		return -1;
+	else if (matches.size() == 1) // one course has a matching name
+		return matches[0];
+	else // multiple courses have a matching name
+	{
+		std::cout << "\n Found multiple courses with the same name."
+			"\n Select the course:";
+		for (int i = 0; i < matches.size(); i++)
+		{
+			std::cout << "\n " << i + 1 << ". ";
+			_courses[matches[i]]._print_course();
+		}
+
+		std::cout << "\n> ";
+		std::string menu_choice;
+		std::cin >> menu_choice;
+		return matches[stoi(menu_choice) - 1];
+	}
 }
 
+// Returns a vector of all accreditors for all courses.
+// The vector has no duplicates.
 std::vector<std::string> Courses::_list_accreditors()
 {
 	std::vector<std::string> list;
@@ -286,7 +314,7 @@ std::vector<std::string> Courses::_list_accreditors()
 }
 
 // Returns the GPA for one accreditor.
-// Returns -1 if the accreditor is not giving credit for any units
+// Returns -1 if the accreditor is not giving credit for any units,
 // e.g. if the user entered "none" as the accreditor for all courses 
 // with a grade of 'W'.
 double Courses::_get_GPA(std::string accreditor)
