@@ -168,9 +168,12 @@ void Courses::_print_GPAs()
 	std::vector<std::string> accreditors = _list_accreditors();
 	for (int i = 0; i < accreditors.size(); i++)
 	{
-		double GPA = _get_GPA(accreditors[i]);
-		if (GPA >= 0)
-			std::cout << "\n " << accreditors[i] << " GPA: " << std::fixed << GPA;
+		if (accreditors[i].find_first_not_of(' ') != std::string::npos)
+		{
+			double GPA = _get_GPA(accreditors[i]);
+			if (GPA >= 0)
+				std::cout << "\n " << accreditors[i] << " GPA: " << std::fixed << GPA;
+		}
 	}
 
 	std::cout << std::endl;
