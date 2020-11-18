@@ -19,12 +19,12 @@ public:
 	void _delete_course();
 	void _print_courses();
 	void _print_GPAs_and_units();
-	void _print_GPAs(std::vector<std::string> accreditors);
-	void _print_transferable_units(std::vector<std::string> accreditors);
 private:
 	std::vector<Course> _courses;
 	enum { NAME = 1, UNITS, GRADE, ACCREDITORS, RETURN };
 
+	void _print_GPAs(std::vector<std::string> accreditors);
+	void _print_transferable_units(std::vector<std::string> accreditors);
 	Course _read_new_course();
 	std::string _read_name();
 	int _read_units();
