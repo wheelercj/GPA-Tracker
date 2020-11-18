@@ -1,7 +1,7 @@
 # GPA-Tracker
 [![Run on Repl.it](https://repl.it/badge/github/wheelercj/GPA-Tracker)](https://repl.it/github/wheelercj/GPA-Tracker)
 
-Save your course data and calculate your GPAs including transfer GPAs.
+Save your course data and calculate your GPAs (including transfer GPAs) and your transferable units.
 
 ## Why?
 With this GPA tracker, you don't need to enter your course data multiple times to calculate each of your GPAs. Your GPA if you're at a 2-year college might not be the same as your CSU-transferable GPA, and chances are neither of those are the same as your UC-transferable GPA!
