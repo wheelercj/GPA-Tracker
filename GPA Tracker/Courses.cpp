@@ -168,6 +168,7 @@ void Courses::_print_GPAs()
 	std::vector<std::string> accreditors = _list_accreditors();
 	for (int i = 0; i < accreditors.size(); i++)
 	{
+		// if the accreditor is not an empty string
 		if (accreditors[i].find_first_not_of(' ') != std::string::npos)
 		{
 			double GPA = _get_GPA(accreditors[i]);
@@ -176,7 +177,38 @@ void Courses::_print_GPAs()
 		}
 	}
 
+	_print_transferable_units(accreditors);
+
 	std::cout << std::endl;
+}
+
+// print the number of transferable units for each accreditor
+void Courses::_print_transferable_units(std::vector<std::string> accreditors)
+{
+	if (_courses.empty())
+		return;
+
+	std::cout << std::endl;
+
+	// for each accreditor
+	for (int i = 0; i < accreditors.size(); i++)
+	{
+		// if the accreditor is not an empty string
+		if (accreditors[i].find_first_not_of(' ') != std::string::npos)
+		{
+			int transferable_units = 0;
+
+			// for each course
+			for (int j = 0; j < _courses.size(); j++)
+			{
+				// if accreditors[i] is in the course's accreditors list
+				if (_courses[j]._get_accreditors().find(accreditors[i]) != std::string::npos)
+					transferable_units += _courses[j]._get_units();
+			}
+
+			std::cout << "\n " << accreditors[i] << " transferable units: " << transferable_units;
+		}
+	}
 }
 
 // get a new course from the user

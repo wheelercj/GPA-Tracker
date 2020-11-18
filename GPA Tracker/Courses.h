@@ -19,6 +19,7 @@ public:
 	void _erase_course();
 	void _print_courses();
 	void _print_GPAs();
+	void _print_transferable_units(std::vector<std::string> accreditors);
 private:
 	std::vector<Course> _courses;
 	enum { NAME = 1, UNITS, GRADE, ACCREDITORS, RETURN };
