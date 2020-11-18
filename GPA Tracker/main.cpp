@@ -6,7 +6,7 @@ Course parse_course(std::string line);
 void save_courses_to_file(Courses courses);
 void print_menu();
 void run_menu(std::string menu_choice, Courses& courses);
-enum { ADD = 1, INSERT, EDIT, DELETE, VIEW_COURSES, VIEW_GPA, EXIT };
+enum { ADD = 1, INSERT, EDIT, DELETE, VIEW_COURSES, VIEW_GPA_AND_UNITS, EXIT };
 
 int main()
 {
@@ -26,13 +26,13 @@ int main()
 void print_menu()
 {
 	std::cout << "\n GPA Tracker:"
-		<< "\n " << ADD << ". Add course"
-		<< "\n " << INSERT << ". Insert course"
-		<< "\n " << EDIT << ". Edit course"
-		<< "\n " << DELETE << ". Delete course"
-		<< "\n " << VIEW_COURSES << ". View courses"
-		<< "\n " << VIEW_GPA << ". View GPA"
-		<< "\n " << EXIT << ". Save and Exit"
+		<< "\n " << ADD << ". add course"
+		<< "\n " << INSERT << ". insert course"
+		<< "\n " << EDIT << ". edit course"
+		<< "\n " << DELETE << ". delete course"
+		<< "\n " << VIEW_COURSES << ". view courses"
+		<< "\n " << VIEW_GPA_AND_UNITS << ". view GPAs and transferable units"
+		<< "\n " << EXIT << ". save and exit"
 		<< "\n> ";
 }
 
@@ -54,13 +54,13 @@ void run_menu(std::string menu_choice, Courses& courses)
 		courses._edit_course();
 		break;
 	case DELETE: // delete a course
-		courses._erase_course();
+		courses._delete_course();
 		break;
 	case VIEW_COURSES: // view all courses
 		courses._print_courses();
 		break;
-	case VIEW_GPA: // view all GPAs
-		courses._print_GPAs();
+	case VIEW_GPA_AND_UNITS: // view all GPAs and transferable units
+		courses._print_GPAs_and_units();
 		break;
 	case EXIT: // save and quit the program
 		break;

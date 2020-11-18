@@ -27,6 +27,7 @@ Course Courses::operator[](int n)
 void Courses::_add_course()
 {
 	_courses.push_back(_read_new_course());
+	std::cout << "\n Course added.\n";
 }
 
 // add a course to the end of the list
@@ -53,6 +54,7 @@ void Courses::_insert_course()
 		std::cout << "\n Enter the new course data.";
 		Course new_course = _read_new_course();
 		_courses.insert(_courses.begin() + index, new_course);
+		std::cout << "\n Course inserted.\n";
 	}
 }
 
@@ -86,11 +88,11 @@ void Courses::_edit_course()
 void Courses::_print_edit_menu()
 {
 	std::cout << "\n\n Edit course:"
-		"\n " << NAME << ". Name"
-		"\n " << UNITS << ". Units"
-		"\n " << GRADE << ". Grade"
-		"\n " << ACCREDITORS << ". Accreditors"
-		"\n " << RETURN << ". Return to main menu"
+		"\n " << NAME << ". name"
+		"\n " << UNITS << ". units"
+		"\n " << GRADE << ". grade"
+		"\n " << ACCREDITORS << ". accreditors"
+		"\n " << RETURN << ". return to main menu"
 		"\n> ";
 }
 
@@ -120,7 +122,7 @@ void Courses::_run_edit_menu(std::string menu_choice, Course& course)
 }
 
 // delete a course
-void Courses::_erase_course()
+void Courses::_delete_course()
 {
 	if (_courses.empty())
 	{
@@ -128,11 +130,24 @@ void Courses::_erase_course()
 		return;
 	}
 
+	std::cout << "\n Which course would you like to delete?";
 	int index = _find_course();
 	if (index == -1)
 		std::cout << "\n Course not found\n";
 	else
-		_courses.erase(_courses.begin() + index);
+	{
+		std::cout << "\n Are you sure? [y/n]: ";
+		std::string choice = "";
+		std::cin >> choice;
+
+		if (tolower(choice[0]) == 'y')
+		{
+			_courses.erase(_courses.begin() + index);
+			std::cout << "\n Course deleted.\n";
+		}
+		else
+			std::cout << "\n Course saved.\n";
+	}
 }
 
 // print all courses
@@ -156,8 +171,8 @@ void Courses::_print_courses()
 	std::cout << std::endl;
 }
 
-// print each accreditor's GPA
-void Courses::_print_GPAs()
+// print each accreditor's GPA and transferable units
+void Courses::_print_GPAs_and_units()
 {
 	if (_courses.empty())
 	{
@@ -166,6 +181,17 @@ void Courses::_print_GPAs()
 	}
 
 	std::vector<std::string> accreditors = _list_accreditors();
+	_print_GPAs(accreditors);
+	std::cout << "\n";
+	_print_transferable_units(accreditors);
+	std::cout << "\n";
+}
+
+
+// print each accreditor's GPA
+void Courses::_print_GPAs(std::vector<std::string> accreditors)
+{
+	// for each accreditor
 	for (int i = 0; i < accreditors.size(); i++)
 	{
 		// if the accreditor is not an empty string
@@ -176,20 +202,11 @@ void Courses::_print_GPAs()
 				std::cout << "\n " << accreditors[i] << " GPA: " << std::fixed << GPA;
 		}
 	}
-
-	_print_transferable_units(accreditors);
-
-	std::cout << std::endl;
 }
 
 // print the number of transferable units for each accreditor
 void Courses::_print_transferable_units(std::vector<std::string> accreditors)
 {
-	if (_courses.empty())
-		return;
-
-	std::cout << std::endl;
-
 	// for each accreditor
 	for (int i = 0; i < accreditors.size(); i++)
 	{
@@ -275,7 +292,7 @@ std::string Courses::_read_accreditors()
 // Returns the index of the course or -1 if the course is not found.
 int Courses::_find_course()
 {
-	std::cout << "\n\n Enter course name: ";
+	std::cout << "\n Enter course name: ";
 	std::string name;
 	std::cin.ignore();
 	std::getline(std::cin, name);

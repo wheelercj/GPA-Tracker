@@ -16,9 +16,10 @@ public:
 	void _edit_course();
 	void _print_edit_menu();
 	void _run_edit_menu(std::string menu_choice, Course& course);
-	void _erase_course();
+	void _delete_course();
 	void _print_courses();
-	void _print_GPAs();
+	void _print_GPAs_and_units();
+	void _print_GPAs(std::vector<std::string> accreditors);
 	void _print_transferable_units(std::vector<std::string> accreditors);
 private:
 	std::vector<Course> _courses;
