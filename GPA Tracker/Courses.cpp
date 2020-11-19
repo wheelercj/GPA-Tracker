@@ -226,6 +226,9 @@ void Courses::_print_transferable_units(std::vector<std::string> accreditors)
 			std::cout << "\n " << accreditors[i] << " transferable units: " << transferable_units;
 		}
 	}
+
+	std::cout << "\n\n Some universities have a transferable unit limit, such";
+	std::cout << "\n as the 70-unit limit for the UC and CSU systems.";
 }
 
 // get a new course from the user
