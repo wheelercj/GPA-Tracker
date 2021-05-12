@@ -1,5 +1,5 @@
 # GPA-Tracker
-[![Run on Repl.it](https://repl.it/badge/github/wheelercj/GPA-Tracker)](https://repl.it/github/wheelercj/GPA-Tracker)
+[![Run on Repl.it](https://repl.it/badge/github/wheelercj/GPA-Tracker)](https://replit.com/@wheelercj/GPA-Tracker)
 
 Save your course data and calculate your GPAs (including transfer GPAs) and your transferable units.
 
